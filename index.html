@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>trendz - Top 10 twitter trends wall</title>
+	<meta name="twitter:widgets:theme" content="light"/>
+	<meta name="twitter:widgets:link-color" content="#55acee"/>
+	<meta name="twitter:widgets:border-color" content="#55acee"/>
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+  <style type="text/css">
+  		body{
+  			font-family: arial;
+  			font-size: 12px;
+  			padding: 0px;
+  			margin: 0px;
+  		}
+  		body *{
+  			box-sizing:border-box;
+  		}
+  	.grid-item{
+  		background: white;
+  		text-align: center;
+  		display: block;
+  		list-style: none;
+  		position: relative;
+  	}
+  	.grid-item .topicx{
+  		position: absolute;
+  		background: rgba(0,0,0,0.5);
+  		text-align: left;
+  		color: white;
+  		width: 100%;
+  		text-overflow:ellipsis;
+  		padding: 10px;
+  		word-wrap:nowrap;
+  		overflow: hidden;
+  		font-weight: bold;
+  		font-size: 18px;
+  		left: 0px;
+  		top:0px;
+  	}
+  	.grid-item img{
+  		width: 100%;
+  		display: block;
+  	}
+  	.grid-item span{
+  		display: block;
+  		max-width: 100%;
+  		background: #f4f4f4;
+  		padding: 10px;
+  		text-align: left;
+  		font-size: 14px;
+  		border-radius: 0 0 5px 5px;
+  		    border-radius: 0 0 5px 5px;
+    word-wrap: break-word;
+    white-space: pre;
+  	}
+  	/* fluid 5 columns */
+	.grid-sizer,
+	.grid-item { width: 20%; }
+	/* 2 columns */
+	.grid-item--width2 { width: 40%; }
+  </style>
+  <script type="text/javascript">
+  	var region = 23424848;
+  	$.ajax({
+  		url:"http://nodejs-trendz.rhcloud.com/dir_"+region+"/index.json",
+  		method:"get",
+  		success:function(res){
+  			var data = res;
+  			var tmphtml = "<ul>";
+  			var width100 = 100;
+  			for(var key in data.trendsData){
+  				if(width100<=0)width100=100;
+  				var thiswidth = Math.random()>0.5 && width100<80?" grid-item--width2":"";
+  				width100 = thiswidth==" grid-item--width2"?width100-40:width100-20;
+  				console.log(thiswidth,width100);
+
+  				var tweetBlock = '<blockquote class="twitter-tweet" lang="'+data.trendsData[key].tweet.metadata.iso_language_code+'"  id="'+data.trendsData[key].tweet.id+'" cards="">'+
+									'<p >'+data.trendsData[key].tweet.text+'</p>'+
+									'— '+data.trendsData[key].tweet.user.name+' (@'+data.trendsData[key].tweet.user.screen_name+')'+
+									'</blockquote>';
+									//console.log(tweetBlock);
+
+  				if(data.trendsData.hasOwnProperty(key)){
+  					tmphtml += "<li class='grid-item grid-sizer "+thiswidth+"'><div class='topicx'>"+unescape(data.trendsData[key].query)+"</div><div data-id='"+data.trendsData[key].tweet.id+"'>"+tweetBlock+"</div></li>";  					
+  				}
+  			}
+  			tmphtml += "</ul>";
+  			console.log(tmphtml);
+  			$(".app").html(tmphtml);
+  			var elem = document.querySelector('.app');
+  			twttr.widgets.load();
+  			setTimeout(function(){
+  				var msnry = new Masonry( elem, {
+				  // options
+				  itemSelector: '.grid-item',
+				  // use element for option
+				  columnWidth: '.grid-sizer',
+				  percentPosition: true
+				});
+
+				
+
+  			},2000)
+			
+  		},
+  		error:function(err){
+  			alert("Somthing wrong, try reloading browser.");
+  		}
+  	})
+  </script>
+</head>
+<body>
+	<nav class="nav">
+	</nav>
+	<div class="app" id="app">
+
+	</div>
+<script type="text/javascript" src="js/masonry.pkgd.min.js"></script>
+
+</body>
+</html>
