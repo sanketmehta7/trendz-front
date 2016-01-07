@@ -11,10 +11,12 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
-  
+  <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
   <script type="text/javascript">
   	var region = typeof localStorage.region!=='undefined'?localStorage.region:1;//23424848
     var totalTries = 2;
+    var topcnt = 0
+    var pagination = 0;
       function loadData(){
         region = typeof localStorage.region!=='undefined'?localStorage.region:1;
         $(".app").html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>');
@@ -41,11 +43,12 @@
                       var gridArr = [[5,4,3],[4,3,5],[3,5,4],[3,4,5],[5,3,4],[4,5,3]];
                       var gridMapSmallDevice = {5:12,4:12,3:12};
                       var cnt = 0;
-                      var topcnt =0;
+                      topcnt =0;
+
                       var randIndex = parseInt(Math.random()*gridArr.length);
                       var tmpGrid = gridArr[randIndex];
                       for(var i=0;i<data.statuses.length;i++){
-                        topcnt++;
+                        
                         if(cnt%3==0){
                           cnt=0;
                           tmpGrid = gridArr[parseInt(Math.random()*gridArr.length)];
@@ -54,9 +57,6 @@
                         if(typeof data.statuses[i].entities.media!="undefined" && data.statuses[i].entities.media.length &&  data.statuses[i].entities.media[0].type=='photo'){
                           var innerMedia = '<img src="'+data.statuses[i].entities.media[0].media_url+'"/>';
                           typeFeed = "image";
-                        }else if(typeof data.statuses[i].entities.media!="undefined" && data.statuses[i].entities.media.length &&  data.statuses[i].entities.media[0].type=='video'){
-                          var innerMedia = '<video src="'+data.statuses[i].entities.media[0].media_url+'"/>';
-                          typeFeed = "video";
                         }else{
                           var innerMedia = '<div></div>';
                           typeFeed = "text";
@@ -65,6 +65,11 @@
                         if(data.statuses[i].entities.urls && data.statuses[i].entities.urls.length){
                           for(var j=0;j<data.statuses[i].entities.urls.length;j++){
 
+                            if(data.statuses[i].entities.urls[j].expanded_url.indexOf("youtu")>=0 && data.statuses[i].entities.urls[j].expanded_url.indexOf("ln.is")==-1){
+                              var innerMedia = '<iframe class="youtube-embed" src="https://www.youtube.com/embed/'+extractVideoID(data.statuses[i].entities.urls[j].expanded_url)+'"  frameborder="0"></iframe>';
+                              typeFeed = "video youtube";
+                              break;
+                            }
                             if(data.statuses[i].entities.urls[j].display_url.indexOf("vine.co")>=0){
                               var innerMedia = '<iframe class="vine-embed" src="https://'+data.statuses[i].entities.urls[j].display_url+'/embed/simple"  frameborder="0"></iframe><script async src="//platform.vine.co/static/scripts/embed.js"/>';
                               typeFeed = "video vine";
@@ -75,17 +80,23 @@
 
                         var mediaBlock = "<div class='media "+typeFeed+"'>"+innerMedia+"</div>";
 
-                        var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'>"+data.statuses[i].user.screen_name+"</h2></div>"+mediaBlock;
+                        var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'><img class='tweetUser' src='"+data.statuses[i].user.profile_image_url+"'/> "+data.statuses[i].user.screen_name+"</h2></div>"+mediaBlock;
 
                         var buttonBar = '<div class="mdl-card__actions mdl-card--border">'+
-                                              '<a href="trendAlone.html?index='+topcnt+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
-                                               'View trend'+
+                                              '<a href="https://twitter.com/intent/tweet?in_reply_to='+data.statuses[i].id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                               'Reply'+
+                                              '</a>&nbsp;'+
+                                              '<a href="https://twitter.com/intent/retweet?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                               'Retweet'+
+                                              '</a>&nbsp;'+
+                                              '<a href="https://twitter.com/intent/follow?screen_name='+data.statuses[i].user.screen_name+'&user_id='+data.statuses[i].user.id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                               'Follow user'+
                                               '</a>'+
                                             '</div>';
                         var sharMenu = '<div class="mdl-card__menu">'+
-                                          '<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-                                            '<i class="material-icons">share</i>'+
-                                          '</button>'+
+                                          '<a href="https://twitter.com/intent/like?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+                                            '<i class="material-icons">favorite</i>'+
+                                          '</a>'+
                                         '</div>';
 
                         var tweetBlock = '<div class="twitter-tweet mdl-card__supporting-text"  id="'+data.statuses[i].id+'">'+
@@ -95,13 +106,16 @@
                                 //console.log(tweetBlock);
 
                         
-                          tmphtml += "<div  class='mdl-cell trendCards "+tmpGrid[cnt]+""+gridMapSmallDevice[tmpGrid[cnt]]+" post-"+typeFeed+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
-                        
+                          tmphtml += "<div id='card_"+topcnt+"' class='trendCards mdl-card mdl-shadow--2dp "+tmpGrid[cnt]+""+gridMapSmallDevice[tmpGrid[cnt]]+" post-"+typeFeed+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
+                        topcnt++;
                         cnt++;
                       }
                       tmphtml += "</div>";
                       //console.log(tmphtml);
                       $(".app").html(tmphtml);
+                      $(".trendCards").hide();
+                      $("#card_0").show();
+                      $(".app").append('<div class="bottomnav"><button onclick="prev()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">keyboard_arrow_left</i></button><button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right" onclick="next()"><i class="material-icons">keyboard_arrow_right</i></button></div>');
                       var elem = document.querySelector('.app');
                     }else{//mismatch in top trend query and inner topic feeds query, trying again in few seconds
                       totalTries--;
@@ -149,11 +163,38 @@
       console.log(localStorage.region );
       loadData();
     }
+    function next(){
+      if(pagination<topcnt-1){
+        pagination++;
+        $(".trendCards").hide();
+        $("#card_"+pagination).show();
+      }
+
+    }
+    function extractVideoID(url){
+      if(url.indexOf('ln.is')>=0){
+        return url.split(".com/")[1];
+      }
+      var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+      var match = url.match(regExp);
+      if ( match && match[7].length == 11 ){
+          return match[7];
+      }else{
+          alert("Could not extract video ID.");
+      }
+  }
+    function prev(){
+      if(pagination>0){
+        pagination--;
+        $(".trendCards").hide();
+        $("#card_"+pagination).show();
+      }
+    }
   </script>
 </head>
 <body>
 	
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header trendsPage">
     <header class="mdl-layout__header">
       <div class="mdl-layout-icon"></div>
       <div class="mdl-layout__header-row">
@@ -169,10 +210,11 @@
       </div>
     </header>
     <main class="mdl-layout__content mdl-grid">
-      <div class="app mdl-cell mdl-cell--8-col" id="app">
+      <div class="app mdl-grid mdl-cell  mdl-cell--8-col mdl-cell--12-col-tablet" id="app">
         <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>
       </div>
-      <div class="sidebar mdl-cell mdl-cell--4-col">
+      <div class="sidebar mdl-cell mdl-cell--4-col  mdl-cell--12-col-tablet">
+        Other trends
       </div>
     </main>
   </div>

@@ -28,10 +28,10 @@ body *{
   	.mdl-cell.indexgrid img{
   		width: 100%;
   		display: block;
-      opacity: 0.1;
+      opacity: 0.15;
   	}
   	.mdl-cell.indexgrid:hover img{
-  		opacity: 0.7;
+  		opacity: 1;
   	}
   	.mdl-cell.indexgrid:hover .media.image:before{
   		content: " ";
@@ -56,7 +56,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
   	.twitter-tweet{
   		padding: 10px;
   		font-size: 12px;
-  		margin-bottom: 45px;
+  		margin-bottom: 55px;
   		color: black;
   	}
   	.mdl-cell span{
@@ -93,6 +93,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
   		top: 0px;
   		left: 0px;
   	}
+
+    .userlink{
+      text-decoration: none;
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
   	.indexgrid.post-image.mdl-cell:hover .userlink{
   		color: white;
   		text-decoration: underline;
@@ -110,6 +116,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     .mdl-layout__title, .mdl-layout-title{
       font-weight: 100;
     }
+    .trendsPage .mdl-layout__title, .mdl-layout-title {
+          font-weight: 100;
+          width: 80%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
     .mdl-layout__title a{
       font-weight: 100;
       color: white;
@@ -118,6 +131,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     .trendCards {
       width: 100%;
       position: relative;
+      margin-bottom: 15px;
+
     }
     .trendCards .twitter-tweet{
       padding-bottom: 55px;
@@ -129,13 +144,55 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
       overflow: hidden;
     }
     .vine-embed{
-position: absolute;
+    position: absolute;
     top: 0;
-    left: 25%;
-    width: 50%;
-
-    height: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    }
+    .media.youtube{
+      position: relative;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+    }
+    .youtube-embed{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     }
     .mdl-card__actions  a{
       text-transform: none;
     }
+
+@media (max-width: 479px){
+  .mdl-cell--3-col, .mdl-cell--3-col-phone.mdl-cell--3-col-phone {
+      width: calc(100% - 16px);
+  }
+}
+.mdl-menu__item.active {
+    background-color: #e4e4e4;
+}
+ .trendCards  img{
+      width: 100%;
+      display: block;
+      
+    }
+    .tweetUser{
+      border-radius: 50%;
+      width: 48px !important;
+      height: 48px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    .trendCards .topic h2{
+      vertical-align: middle;
+      line-height: 45px;
+    }
+    .pull-right{
+      float: right;
+    }
+    .bottomnav {
+    width: 100%;
+}
