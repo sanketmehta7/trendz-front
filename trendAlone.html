@@ -57,7 +57,7 @@
               var trendsData = dataTop[0].trends[index];
               for(var ot=0;ot<10;ot++){
                 if(index==ot)continue;
-                otherTrends += '<li><a href="./trendsAlone.html?index='+ot+'">'+dataTop[0].trends[ot].name+'</a></li>';
+                otherTrends += '<li><a href="./trendAlone.html?index='+ot+'">'+dataTop[0].trends[ot].name+'</a></li>';
               }
               otherTrends +="</ul>";
               $(".sideapp").html(otherTrends);
