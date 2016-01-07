@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>trendz - Top 10 twitter trends wall</title>
+	<title>trends - Top 10 twitter trends wall</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.blue_grey-deep_purple.min.css" />
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.brown-indigo.min.css" />
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -16,8 +16,9 @@
   	var region = typeof localStorage.region!=='undefined'?localStorage.region:1;//23424848
       function loadData(){
         region = typeof localStorage.region!=='undefined'?localStorage.region:1;
+        $(".app").html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>');
         $.ajax({
-        url:"http://nodejs-trendz.rhcloud.com/dir_"+region+"/index.json",
+        url:"http://nodejs-trendz.rhcloud.com/dir_"+region+"/index.json?"+Date.parse(new Date()),
         method:"get",
         success:function(res){
           var data = res;
@@ -30,7 +31,7 @@
           var randIndex = parseInt(Math.random()*gridArr.length);
           var tmpGrid = gridArr[randIndex];
           for(var key in data.trendsData){
-            topcnt++;
+            
             if(cnt%3==0){
               cnt=0;
               tmpGrid = gridArr[parseInt(Math.random()*gridArr.length)];
@@ -48,7 +49,7 @@
             var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'>"+myTitle(decodeURIComponent(data.trendsData[key].query))+"</h2>"+mediaBlock+"</div>";
 
             var buttonBar = '<div class="mdl-card__actions mdl-card--border">'+
-                                  '<a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="opentrend('+topcnt+')">'+
+                                  '<a href="trendAlone.html?index='+topcnt+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
                                    'View trend'+
                                   '</a>'+
                                 '</div>';
@@ -65,9 +66,10 @@
                     //console.log(tweetBlock);
 
             if(data.trendsData.hasOwnProperty(key)){
-              tmphtml += "<div  class='mdl-grid mdl-cell mdl-cell--"+tmpGrid[cnt]+"-col mdl-cell--"+gridMapSmallDevice[tmpGrid[cnt]]+"-col-tablet demo-card-wide mdl-card mdl-shadow--2dp post-"+data.trendsData[key].type+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
+              tmphtml += "<div  class='mdl-grid mdl-cell indexgrid mdl-cell--"+tmpGrid[cnt]+"-col mdl-cell--"+gridMapSmallDevice[tmpGrid[cnt]]+"-col-tablet demo-card-wide mdl-card mdl-shadow--2dp post-"+data.trendsData[key].type+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
             }
             cnt++;
+            topcnt++;
           }
           tmphtml += "</div>";
           //console.log(tmphtml);
@@ -76,7 +78,7 @@
         
         },
         error:function(err){
-          alert("Somthing wrong, try reloading browser.");
+          alert("Somthing wrong, unable to fetch data, try reloading browser.");
         }
       })
     }
@@ -92,6 +94,7 @@
       console.log(localStorage.region );
       loadData();
     }
+
   </script>
 </head>
 <body>
@@ -100,7 +103,9 @@
     <header class="mdl-layout__header">
       <div class="mdl-layout-icon"></div>
       <div class="mdl-layout__header-row">
-        <span class="mdl-layout__title">twitter Trends</span>
+        <span class="mdl-layout__title">
+          <a href='/#'><img src='/logo.png' width='32px'/> twitter trends</a>
+        </span>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation">
           <button id="menu-speed" class="mdl-button mdl-js-button ">
@@ -114,7 +119,9 @@
       </div>
     </header>
     <main class="mdl-layout__content">
-      <div class="app" id="app"></div>
+      <div class="app" id="app">
+        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>
+      </div>
     </main>
   </div>
 	

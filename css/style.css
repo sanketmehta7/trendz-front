@@ -12,7 +12,7 @@ body{
 body *{
 	box-sizing:border-box;
 }
-.mdl-grid.mdl-cell {
+.mdl-cell {
 	padding: 0px;
 	position: relative;
 }
@@ -25,17 +25,17 @@ body *{
   		font-weight: 900;
   		word-break: break-word;
   	}
-  	.mdl-cell img{
+  	.mdl-cell.indexgrid img{
   		width: 100%;
   		display: block;
   		-webkit-filter: blur(160px);
 		filter: blur(160px);
   	}
-  	.mdl-cell:hover img{
+  	.mdl-cell.indexgrid:hover img{
   		-webkit-filter: blur(0px);
 		filter: blur(0px);
   	}
-  	.mdl-cell:hover .media.image:before{
+  	.mdl-cell.indexgrid:hover .media.image:before{
   		content: " ";
   		position: absolute;
   		z-index: 1;
@@ -52,7 +52,7 @@ background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.72) 10%, rgb
 background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.72) 10%, rgba(0,0,0,0.55) 16%, rgba(0,0,0,0.67) 67%, rgba(0,0,0,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
 }
-  	.post-image.mdl-cell:hover .twitter-tweet p,.post-image.mdl-cell:hover .twitter-tweet,.post-image.mdl-cell:hover .topic,.post-image.mdl-cell:hover{
+  	.indexgrid.post-image.mdl-cell:hover .twitter-tweet p,.indexgrid.post-image.mdl-cell:hover .twitter-tweet,.indexgrid.post-image.mdl-cell:hover .topic,.indexgrid.post-image.mdl-cell:hover{
   		color: white;
   	}
   	.twitter-tweet{
@@ -86,7 +86,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     bottom: 0px;
     left: 0px;
   	}
-  	.topic .media{
+  	.indexgrid .topic .media{
   		position: absolute;
   		width: 100%;
   		height: 0px;
@@ -95,7 +95,45 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
   		top: 0px;
   		left: 0px;
   	}
-  	.mdl-cell:hover .userlink{
+  	.indexgrid.post-image.mdl-cell:hover .userlink{
   		color: white;
   		text-decoration: underline;
   	}
+    #p2{
+      margin: 200px auto;
+    }
+    #menu-speed{
+      color: white;
+      text-transform:initial;
+    }
+    .mdl-layout__header-row{
+      padding: 16px !important;
+    }
+    .mdl-layout__title, .mdl-layout-title{
+      font-weight: 100;
+    }
+    .mdl-layout__title a{
+      font-weight: 100;
+      color: white;
+    }
+    .trendCards {
+      width: 100%;
+      position: relative;
+    }
+    .trendCards .twitter-tweet{
+      padding-bottom: 55px;
+      margin-bottom: 0px;
+    }
+    .media.vine{
+      position: relative;
+      padding-bottom: 100%;
+      overflow: hidden;
+    }
+    .vine-embed{
+position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+
+    height: 50%;
+    }

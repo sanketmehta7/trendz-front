@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>trends - Top 10 twitter trends wall</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.brown-indigo.min.css" />
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="css/style.css"/>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+  
+  <script type="text/javascript">
+  	var region = typeof localStorage.region!=='undefined'?localStorage.region:1;//23424848
+    var totalTries = 2;
+      function loadData(){
+        region = typeof localStorage.region!=='undefined'?localStorage.region:1;
+        $(".app").html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>');
+        $.ajax({
+        url:"http://nodejs-trendz.rhcloud.com/"+region+".json?"+Date.parse(new Date()),
+        method:"get",
+        success:function(res){
+           var index = location.search.split("index=");
+           if(index.length==2 && !isNaN(parseInt(index[1]))){
+            index = parseInt(index[1]);
+            var dataTop = res;
+            if(typeof dataTop[0] != "undefined" && typeof dataTop[0].trends != "undefined"){
+              var trendsData = dataTop[0].trends[index];
+              $.ajax({
+              url:"http://nodejs-trendz.rhcloud.com/dir_"+region+"/top_"+index+".json?"+Date.parse(new Date()),
+              method:"get",
+              success:function(res){
+                  var data = res;
+                  if(typeof data.statuses!="undefined" && data.statuses.length){
+                    if(encodeURIComponent(unescape(trendsData.query)) == data.search_metadata.query){
+                      $(".afterSlash").html(trendsData.name);
+                      var tmphtml = "<div class='boxapp'>";
+                      var width100 = 100;
+                      var gridArr = [[5,4,3],[4,3,5],[3,5,4],[3,4,5],[5,3,4],[4,5,3]];
+                      var gridMapSmallDevice = {5:12,4:12,3:12};
+                      var cnt = 0;
+                      var topcnt =0;
+                      var randIndex = parseInt(Math.random()*gridArr.length);
+                      var tmpGrid = gridArr[randIndex];
+                      for(var i=0;i<data.statuses.length;i++){
+                        topcnt++;
+                        if(cnt%3==0){
+                          cnt=0;
+                          tmpGrid = gridArr[parseInt(Math.random()*gridArr.length)];
+                        }
+                        var typeFeed = "";
+                        if(typeof data.statuses[i].entities.media!="undefined" && data.statuses[i].entities.media.length &&  data.statuses[i].entities.media[0].type=='photo'){
+                          var innerMedia = '<img src="'+data.statuses[i].entities.media[0].media_url+'"/>';
+                          typeFeed = "image";
+                        }else if(typeof data.statuses[i].entities.media!="undefined" && data.statuses[i].entities.media.length &&  data.statuses[i].entities.media[0].type=='video'){
+                          var innerMedia = '<video src="'+data.statuses[i].entities.media[0].media_url+'"/>';
+                          typeFeed = "video";
+                        }else{
+                          var innerMedia = '<div></div>';
+                          typeFeed = "text";
+                        }
+                        console.log(data.statuses[i].entities.urls);
+                        if(data.statuses[i].entities.urls && data.statuses[i].entities.urls.length){
+                          for(var j=0;j<data.statuses[i].entities.urls.length;j++){
+
+                            if(data.statuses[i].entities.urls[j].display_url.indexOf("vine.co")>=0){
+                              var innerMedia = '<iframe class="vine-embed" src="https://'+data.statuses[i].entities.urls[j].display_url+'/embed/simple"  frameborder="0"></iframe><script async src="//platform.vine.co/static/scripts/embed.js"/>';
+                              typeFeed = "video vine";
+                              break;
+                            }
+                          }
+                        }
+
+                        var mediaBlock = "<div class='media "+typeFeed+"'>"+innerMedia+"</div>";
+
+                        var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'>"+data.statuses[i].user.screen_name+"</h2></div>"+mediaBlock;
+
+                        var buttonBar = '<div class="mdl-card__actions mdl-card--border">'+
+                                              '<a href="trendAlone.html?index='+topcnt+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                               'View trend'+
+                                              '</a>'+
+                                            '</div>';
+                        var sharMenu = '<div class="mdl-card__menu">'+
+                                          '<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+                                            '<i class="material-icons">share</i>'+
+                                          '</button>'+
+                                        '</div>';
+
+                        var tweetBlock = '<div class="twitter-tweet mdl-card__supporting-text"  id="'+data.statuses[i].id+'">'+
+                                '<p >'+data.statuses[i].text+'</p>'+
+                                '<a class="userlink" href="http://twitter.com/'+data.statuses[i].user.screen_name+'" target="_blank">— '+data.statuses[i].user.name+' (@'+data.statuses[i].user.screen_name+')</a>'+
+                                '</div>';
+                                //console.log(tweetBlock);
+
+                        
+                          tmphtml += "<div  class='mdl-cell trendCards "+tmpGrid[cnt]+""+gridMapSmallDevice[tmpGrid[cnt]]+" post-"+typeFeed+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
+                        
+                        cnt++;
+                      }
+                      tmphtml += "</div>";
+                      //console.log(tmphtml);
+                      $(".app").html(tmphtml);
+                      var elem = document.querySelector('.app');
+                    }else{//mismatch in top trend query and inner topic feeds query, trying again in few seconds
+                      totalTries--;
+                      if(totalTries>0)
+                        setTimeout(loadData,1000);
+                      else{
+                        alert("Mismatch in topic, trends must have been updated, redirecting back to home.");
+                        location.href = "/index.html";
+                      }
+                    }
+                    
+                  }else{
+                    alert("No data for this trend, try again later.");
+                    location.href = "/index.html";
+                  }
+                  
+               },
+                error:function(err){
+                  alert("Somthing wrong, unable to fetch data, try reloading browser.");
+                }
+              });
+            }else{
+              alert("Unable to fetch trend data, try again later.");
+            }
+            
+           }else{
+            alert("Please pass trend topic parameter.")
+           }
+        
+        },
+        error:function(err){
+          alert("Somthing wrong, unable to fetch data, try reloading browser.");
+        }
+      })
+    }
+    loadData();
+  	
+    function myTitle(str){
+      str = str.replace(/\"/g,'');
+      str = str.replace(/\+/g,' ');
+      return str;
+    }
+    function change(regionWOID){
+      localStorage.region = regionWOID;
+      console.log(localStorage.region );
+      loadData();
+    }
+  </script>
+</head>
+<body>
+	
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout-icon"></div>
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout__title">         
+          <a href='/'><img src='/logo.png' width='32px'/> twitter trends</a> / <span class='afterSlash'></span>
+        </span>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+          <a href='/' id="menu-speed" class="mdl-button mdl-js-button ">
+            Back
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main class="mdl-layout__content mdl-grid">
+      <div class="app mdl-cell mdl-cell--8-col" id="app">
+        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>
+      </div>
+      <div class="sidebar mdl-cell mdl-cell--4-col">
+      </div>
+    </main>
+  </div>
+	
+</body>
+</html>
