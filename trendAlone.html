@@ -7,8 +7,8 @@
   <meta name="description" content="Top 10 tweeter trends wall for your region.">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta name="description=" content="Top 10 tweeter trends wall for your region.">
-  <meta name="keywords" content="material design,google design,themer,color pallete">
-  <link rel='shortcut icon' type='image/x-icon' href='res/mm.png' />
+  <meta name="keywords" content="twitter trends, top 10 twitter trends, top twitter trends, india twitter trends, world twitter trends, usa twitter trends, brazil twitter trends">
+  <link rel='shortcut icon' type='image/x-icon' href='./logo.png' />
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="icon" sizes="196x196" href="./logo.png">
@@ -41,6 +41,7 @@
     var totalTries = 2;
     var topcnt = 0
     var pagination = 0;
+    var otherTrends = "<ul class='otherTrendsList'>";
       function loadData(){
         region = typeof localStorage.region!=='undefined'?localStorage.region:1;
         $(".app").html('<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>');
@@ -54,6 +55,12 @@
             var dataTop = res;
             if(typeof dataTop[0] != "undefined" && typeof dataTop[0].trends != "undefined"){
               var trendsData = dataTop[0].trends[index];
+              for(var ot=0;ot<10;ot++){
+                if(index==ot)continue;
+                otherTrends += '<li><a href="./trendsAlone.html?index='+ot+'">'+dataTop[0].trends[ot].name+'</a></li>';
+              }
+              otherTrends +="</ul>";
+              $(".sideapp").html(otherTrends);
               $.ajax({
               url:"http://nodejs-trendz.rhcloud.com/dir_"+region+"/top_"+index+".json?"+Date.parse(new Date()),
               method:"get",
@@ -139,8 +146,17 @@
                       $(".app").html(tmphtml);
                       $(".trendCards").hide();
                       $("#card_0").show();
+
+                      $(".app").append('<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"/>'+
+                                        '<ins class="adsbygoogle"'+
+                                             'style="display:inline-block;width:320px;height:100px"'+
+                                             'data-ad-client="ca-pub-4981239681809210"'+
+                                             'data-ad-slot="6347064089"></ins>'+
+                                        '<script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>'
+                                        );
+
                       $(".app").append('<div class="bottomnav"><button onclick="prev()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">keyboard_arrow_left</i></button><button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right" onclick="next()"><i class="material-icons">keyboard_arrow_right</i></button></div>');
-                      var elem = document.querySelector('.app');
+                      
                     }else{//mismatch in top trend query and inner topic feeds query, trying again in few seconds
                       totalTries--;
                       if(totalTries>0)
@@ -238,12 +254,22 @@
         <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate mdl-spinner--single-color"></div>
       </div>
       <div class="sidebar mdl-cell mdl-cell--4-col  mdl-cell--12-col-tablet">
-        Other trends
+        Other popular trends
         <div class="sideapp">
-          
+
         </div>
       </div>
     </main>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-72156600-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </div>
 	
 </body>

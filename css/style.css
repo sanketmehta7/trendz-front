@@ -170,6 +170,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
   .mdl-cell--3-col, .mdl-cell--3-col-phone.mdl-cell--3-col-phone {
       width: calc(100% - 16px);
   }
+  .trendsPage .mdl-grid {
+      padding:0px;
+  }
 }
 .mdl-menu__item.active {
     background-color: #e4e4e4;
@@ -211,4 +214,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
 }
 .sidebar h5{
   margin: 0 0 5px 0;
+}
+.otherTrendsList,.otherTrendsList li{
+  margin: 0px;
+  list-style: none;
+  padding: 0px;
+
+}
+.otherTrendsList {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+}
+.otherTrendsList li a{
+  padding: 10px;
+  display: block;
+  border: 1px solid #eee;
+  border-top: 0px;
 }
