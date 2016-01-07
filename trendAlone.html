@@ -109,13 +109,13 @@
                         setTimeout(loadData,1000);
                       else{
                         alert("Mismatch in topic, trends must have been updated, redirecting back to home.");
-                        location.href = "/index.html";
+                        location.href = "./index.html";
                       }
                     }
                     
                   }else{
                     alert("No data for this trend, try again later.");
-                    location.href = "/index.html";
+                    location.href = "./index.html";
                   }
                   
                },
@@ -158,11 +158,11 @@
       <div class="mdl-layout-icon"></div>
       <div class="mdl-layout__header-row">
         <span class="mdl-layout__title">         
-          <a href='/'><img src='/logo.png' width='32px'/> twitter trends</a> / <span class='afterSlash'></span>
+          <a href='./index.html'><img src='./logo.png' width='32px'/> twitter trends</a> / <span class='afterSlash'></span>
         </span>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation">
-          <a href='/' id="menu-speed" class="mdl-button mdl-js-button ">
+          <a href='./index.html' id="menu-speed" class="mdl-button mdl-js-button ">
             Back
           </a>
         </nav>
