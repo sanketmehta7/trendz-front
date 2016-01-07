@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>trends - Top 10 twitter trends wall</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.brown-indigo.min.css" />
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -49,9 +49,13 @@
             var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'>"+myTitle(decodeURIComponent(data.trendsData[key].query))+"</h2>"+mediaBlock+"</div>";
 
             var buttonBar = '<div class="mdl-card__actions mdl-card--border">'+
-                                  '<a href="trendAlone.html?index='+topcnt+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
-                                   'View trend'+
+                                '<a href="http://twitter.com/home?status='+data.trendsData[key].query+'" target="_blank" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent mdl-button--raised">'+
+                                                       'Tweet'+
+                                                      '</a>&nbsp;'+
+                                  '<a href="trendAlone.html?index='+topcnt+'" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent">'+
+                                   'View tweets'+
                                   '</a>'+
+                                  
                                 '</div>';
             var sharMenu = '<div class="mdl-card__menu">'+
                               '<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
@@ -66,7 +70,7 @@
                     //console.log(tweetBlock);
 
             if(data.trendsData.hasOwnProperty(key)){
-              tmphtml += "<div  class='mdl-grid mdl-cell indexgrid mdl-cell--"+tmpGrid[cnt]+"-col mdl-cell--"+gridMapSmallDevice[tmpGrid[cnt]]+"-col-tablet demo-card-wide mdl-card mdl-shadow--2dp post-"+data.trendsData[key].type+"'>"+titleBlock+tweetBlock+buttonBar+sharMenu+"</div>";            
+              tmphtml += "<div  class='mdl-grid mdl-cell indexgrid mdl-cell--"+tmpGrid[cnt]+"-col mdl-cell--"+gridMapSmallDevice[tmpGrid[cnt]]+"-col-tablet demo-card-wide mdl-card mdl-shadow--2dp post-"+data.trendsData[key].type+"'>"+titleBlock+tweetBlock+buttonBar+"</div>";            
             }
             cnt++;
             topcnt++;

@@ -2,7 +2,7 @@
 
 
 body{
-    font-family: 'Lora', serif;
+   font-family: 'Roboto Slab', serif;
 }
 
 body{
@@ -135,4 +135,7 @@ position: absolute;
     width: 50%;
 
     height: 50%;
+    }
+    .mdl-card__actions  a{
+      text-transform: none;
     }
