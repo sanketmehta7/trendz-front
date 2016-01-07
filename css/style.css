@@ -135,7 +135,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
 
     }
     .trendCards .twitter-tweet{
-      padding-bottom: 55px;
+      padding-bottom: 65px;
       margin-bottom: 0px;
     }
     .media.vine{
@@ -195,4 +195,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     }
     .bottomnav {
     width: 100%;
+}
+
+.trendsPage .mdl-cell {
+    padding: 0px;
+    position: relative;
+    float: left;
+}
+
+.trendsPage .mdl-grid {
+    margin: 8px !important;
+}
+.trendsPage .boxapp {
+    width: 100%;
+}
+.sidebar h5{
+  margin: 0 0 5px 0;
 }
