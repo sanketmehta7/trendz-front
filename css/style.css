@@ -231,3 +231,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
   border: 1px solid #eee;
   border-top: 0px;
 }
+.boxVote{
+  font-size: 28px;
+  line-height: 28px;
+  font-weight: 100;
+  text-align: center;
+  padding: 50px;
+  max-width: 500px;
+  margin: auto;
+}
+.comments{
+  text-align: center;
+  max-width: 500px;
+  margin: auto;
+}
+#regNone a{
+  color: black;
+}
+#regNone i.material-icons.vote {
+    vertical-align: middle;
+    color: #DA0365;
+    font-size: 32px;
+}
+.boxVote i.material-icons.vote {
+    vertical-align: middle;
+    color: #DA0365;
+    font-size: 48px;
+    margin: 0 0 10px;
+    display: block;
+}
