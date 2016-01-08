@@ -247,6 +247,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
 }
 #regNone a{
   color: black;
+  text-decoration: none;
 }
 #regNone i.material-icons.vote {
     vertical-align: middle;
