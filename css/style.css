@@ -33,6 +33,23 @@ body *{
   	.mdl-cell.indexgrid:hover img{
   		opacity: 1;
   	}
+    .mdl-cell.indexgrid .media.image:before{
+      content: " ";
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background: rgba(255,255,255,0.5);
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 10%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.67) 67%, rgba(255,255,255,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(10%, rgba(255,255,255,0.72)), color-stop(16%, rgba(255,255,255,0.55)), color-stop(67%, rgba(255,255,255,0.67)), color-stop(100%, rgba(255,255,255,1)));
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 10%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.67) 67%, rgba(255,255,255,1) 100%);
+background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 10%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.67) 67%, rgba(255,255,255,1) 100%);
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 10%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.67) 67%, rgba(255,255,255,1) 100%);
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.72) 10%, rgba(255,255,255,0.55) 16%, rgba(255,255,255,0.67) 67%, rgba(255,255,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0 );
+}
   	.mdl-cell.indexgrid:hover .media.image:before{
   		content: " ";
   		position: absolute;
