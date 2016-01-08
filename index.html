@@ -64,8 +64,6 @@
 
             if(data.trendsData[key].type=='image')
               var innerMedia = '<img src="'+data.trendsData[key].tweet.entities.media[0].media_url+'"/>';
-            else if(data.trendsData[key].type=='video')
-              var innerMedia = '<video src="'+data.trendsData[key].tweet.entities.media[0].media_url+'"/>';
             else 
               var innerMedia = '<div>&nbsp;<br/>  &nbsp;</div>';
 
