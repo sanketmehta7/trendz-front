@@ -113,18 +113,18 @@
                         var titleBlock = "<div class='topic mdl-card__title'><h2 class='mdl-card__title-text'><img class='tweetUser' src='"+data.statuses[i].user.profile_image_url+"'/> "+data.statuses[i].user.screen_name+"</h2></div>"+mediaBlock;
 
                         var buttonBar = '<div class="mdl-card__actions mdl-card--border">'+
-                                              '<a href="https://twitter.com/intent/tweet?in_reply_to='+data.statuses[i].id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                              '<a href="https://twitter.com/intent/tweet?in_reply_to='+data.statuses[i].id_str+'" class="mdl-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
                                                'Reply'+
                                               '</a>&nbsp;'+
-                                              '<a href="https://twitter.com/intent/retweet?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                              '<a href="https://twitter.com/intent/retweet?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
                                                'Retweet'+
                                               '</a>&nbsp;'+
-                                              '<a href="https://twitter.com/intent/follow?screen_name='+data.statuses[i].user.screen_name+'&user_id='+data.statuses[i].user.id_str+'" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
+                                              '<a href="https://twitter.com/intent/follow?screen_name='+data.statuses[i].user.screen_name+'&user_id='+data.statuses[i].user.id_str+'" class="mdl-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">'+
                                                'Follow user'+
                                               '</a>'+
                                             '</div>';
                         var sharMenu = '<div class="mdl-card__menu">'+
-                                          '<a href="https://twitter.com/intent/like?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+                                          '<a href="https://twitter.com/intent/like?tweet_id='+data.statuses[i].id_str+'" class="mdl-button mdl-button--icon mdl-js-ripple-effect">'+
                                             '<i class="material-icons">favorite</i>'+
                                           '</a>'+
                                         '</div>';
@@ -154,7 +154,7 @@
                                         '<script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>'
                                         );
 
-                      $(".app").append('<div class="bottomnav"><button onclick="prev()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">keyboard_arrow_left</i></button><button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect pull-right" onclick="next()"><i class="material-icons">keyboard_arrow_right</i></button></div>');
+                      $(".app").append('<div class="bottomnav"><button onclick="prev()" class="mdl-button mdl-button--fab mdl-js-ripple-effect"><i class="material-icons">keyboard_arrow_left</i></button><button class="mdl-button mdl-button--fab mdl-js-ripple-effect pull-right" onclick="next()"><i class="material-icons">keyboard_arrow_right</i></button></div>');
                       
                     }else{//mismatch in top trend query and inner topic feeds query, trying again in few seconds
                       totalTries--;
