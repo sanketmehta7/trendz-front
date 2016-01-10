@@ -278,3 +278,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', end
     margin: 0 0 10px;
     display: block;
 }
+.mobileAd{
+  display: none;
+}
+@media (max-width: 640px){
+  .mobileAd{
+    display: block;
+  }
+  .deskAd{
+    display: none;
+  }
+}
